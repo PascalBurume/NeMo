@@ -142,7 +142,7 @@ def extract_speakers(
         speaker_audio = np.concatenate(chunks)
         duration_sec = len(speaker_audio) / sample_rate
 
-        filename = f"{speaker_prefix}{speaker_id}.{output_format}" if speaker_prefix else f"{speaker_id}.{output_format}"
+        filename = f"{speaker_prefix}{speaker_id}.{output_format}"
         output_path = os.path.join(output_dir, filename)
 
         if output_format == "mp3":
@@ -171,7 +171,7 @@ def _export_mp3(audio_data: np.ndarray, sample_rate: int, output_path: str) -> N
         output_path: Destination file path.
     """
     try:
-        from pydub import AudioSegment  # noqa: F811
+        from pydub import AudioSegment
     except ImportError:
         raise ImportError(
             "pydub is required for MP3 export. Install it with: pip install pydub\n"
