@@ -141,6 +141,38 @@ python neural_diarizer/e2e_diarize_speech.py \
     batch_size=1
 ```
 
+## Extract Per-Speaker Audio from Diarization Output
+
+After running diarization (clustering or end-to-end), you can split the original audio into one file per speaker using the extraction script in `scripts/speaker_tasks/extract_speaker_audio.py`.
+
+#### Single-file mode
+```bash
+python scripts/speaker_tasks/extract_speaker_audio.py \
+    --audio_filepath /path/to/meeting.wav \
+    --rttm_filepath /path/to/pred_rttms/meeting.rttm \
+    --output_dir extracted_speakers \
+    --output_format mp3
+```
+
+#### Manifest mode (batch processing)
+```bash
+python scripts/speaker_tasks/extract_speaker_audio.py \
+    --manifest_filepath /path/to/manifest.json \
+    --rttm_dir /path/to/pred_rttms \
+    --output_dir extracted_speakers \
+    --output_format wav
+```
+
+Output:
+```
+extracted_speakers/
+├── speaker_0.mp3   (first speaker)
+├── speaker_1.mp3   (second speaker)
+└── speaker_2.mp3   (third speaker)
+```
+
+Requirements: `pip install soundfile numpy` (for WAV output) or additionally `pip install pydub` with ffmpeg installed (for MP3 output).
+
 ## Run Speaker Diarization on Your Audio Files
 
 #### Example script for clustering diarizer: with system-VAD
